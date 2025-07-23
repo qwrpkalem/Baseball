@@ -14,12 +14,19 @@ public:
 			//PASS
 		}
 	}
-	void checkgameresult(string guessNumber) {
+	void checkgameresulttrue(string guessNumber, int strikes, int balls) {
 		GuessResult result = game.guess(guessNumber);
 
 		EXPECT_TRUE(result.solved);
-		EXPECT_EQ(3, result.strikes);
-		EXPECT_EQ(0, result.balls);
+		EXPECT_EQ(strikes, result.strikes);
+		EXPECT_EQ(balls, result.balls);
+	}
+	void checkgameresultfalse(string guessNumber, int strikes, int balls) {
+		GuessResult result = game.guess(guessNumber);
+
+		EXPECT_FALSE(result.solved);
+		EXPECT_EQ(strikes, result.strikes);
+		EXPECT_EQ(balls, result.balls);
 	}
 };
 
@@ -31,7 +38,7 @@ TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase)
 }
 TEST_F(BaseballFixture, ReturnSolvedResultIfMatchedNumber)
 {
-	checkgameresult("123");
+	checkgameresulttrue("123", 3, 0);
 }
 
 int main()
