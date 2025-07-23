@@ -41,7 +41,7 @@ TEST_F(BaseballFixture, ReturnSolvedResultIfMatchedNumber)
 	checkgameresulttrue("123", 3, 0);
 }
 
-TEST_F(BaseballFixture, ReturnSolvedResultIfTwoStrikesOneBall)
+TEST_F(BaseballFixture, ReturnSolvedResultIfTwoStrikesNoBall)
 {
 	checkgameresultfalse("125", 2, 0);
 }

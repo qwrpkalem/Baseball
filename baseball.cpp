@@ -18,30 +18,58 @@ public:
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		result.strikes = 0;
-		result.balls = 0;
-		result.solved = false;
+
+		InitResultInfo();
+
+		// strike check
+		result.strikes = GetStrikeCount(guessNumber);
+
+		// ball check
+		result.balls = GetBallCount(guessNumber);
+
+		// Ans Check
+		result.solved = GetIsAns();
+
+		return result;
+	}
+	bool GetIsAns()
+	{
+		if (result.strikes == 3) {
+			return true;
+		}
+		return false;
+	}
+	int GetBallCount(const std::string& guessNumber)
+	{
+		int ret = 0;
 		for (int GuessNumIdx = 0; GuessNumIdx < guessNumber.size(); GuessNumIdx++) {
-
-			if (guessNumber[GuessNumIdx] == question[GuessNumIdx]) {
-				result.strikes++;
-				continue;
-			}
-
 			for (int QuestionIdx = 0; QuestionIdx < question.size(); QuestionIdx++)
 			{
-				if (guessNumber[QuestionIdx] == question[QuestionIdx]) {
-					result.balls++;
-					continue;
+				if (GuessNumIdx == QuestionIdx) continue;
+
+				if (guessNumber[GuessNumIdx] == question[QuestionIdx]) {
+					ret++;
 				}
 			}
 		}
+		return ret;
+	}
+	int GetStrikeCount(const std::string& guessNumber)
+	{
+		int ret = 0;
+		for (int GuessNumIdx = 0; GuessNumIdx < guessNumber.size(); GuessNumIdx++) {
 
-		if (result.strikes == 3) {
-			result.solved = true;
+			if (guessNumber[GuessNumIdx] == question[GuessNumIdx]) {
+				ret++;
+			}
 		}
-
-		return { result.solved , result.strikes, result.balls };
+		return ret;
+	}
+	void InitResultInfo()
+	{
+		result.strikes = 0;
+		result.balls = 0;
+		result.solved = false;
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
@@ -57,13 +85,14 @@ public:
 			throw invalid_argument("Must not have the same number");
 		}
 	}
+private:
+	string question;
+	GuessResult result;
+
 	bool isDuplicatedNumber(const std::string& guessNumber)
 	{
 		return guessNumber[0] == guessNumber[1]
 			|| guessNumber[0] == guessNumber[2]
 			|| guessNumber[1] == guessNumber[2];
 	}
-private:
-	string question;
-	GuessResult result;
 };
