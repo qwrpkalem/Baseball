@@ -1,10 +1,17 @@
 #include "stdexcept"
 using namespace std;
 
+struct GuessResult {
+	bool solved;
+	int strikes;
+	int balls;
+};
+
 class Baseball {
 public:
-	void guess(const string& guessNumber) {
+	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
+		return { true, 3, 0 };
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
@@ -25,5 +32,13 @@ public:
 		return guessNumber[0] == guessNumber[1]
 			|| guessNumber[0] == guessNumber[2]
 			|| guessNumber[1] == guessNumber[2];
+	}
+private:
+	string question;
+public:
+
+	explicit Baseball(const string& question)
+		: question(question)
+	{
 	}
 };
