@@ -40,6 +40,10 @@ TEST_F(BaseballFixture, ReturnSolvedResultIfMatchedNumber)
 {
 	checkgameresulttrue("123", 3, 0);
 }
+TEST_F(BaseballFixture, ReturnSolvedResultIfTwoStrikesOneBall)
+{
+	checkgameresultfalse("125", 2, 0);
+}
 
 int main()
 {
