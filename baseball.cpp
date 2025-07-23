@@ -9,6 +9,10 @@ struct GuessResult {
 
 class Baseball {
 public:
+	explicit Baseball(const string& question)
+		: question(question){
+	}
+
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
 		if (guessNumber == question) {
@@ -38,10 +42,4 @@ public:
 	}
 private:
 	string question;
-public:
-
-	explicit Baseball(const string& question)
-		: question(question)
-	{
-	}
 };
